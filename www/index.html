@@ -49,9 +49,15 @@
 		});
 	
 		socket.on('new message',function(data){
-			console.log('receiver message from '+data.fromUser + ' '+data.msg);
+			console.log('receiver message from '+data.fromUser +' '+data.date+ ' '+data.msg);
 			var val = $('textarea[id=chathistory]').val();
-			$('textarea[id=chathistory]').val(val + data.fromUser + ' ：' + data.msg + '\n');
+			$('textarea[id=chathistory]').val(val + data.fromUser + ' ['+data.date+'] ：' + data.msg + '\n');
+		});
+		
+		socket.on('update myself',function(data){
+			$('textarea[id=message]').val('');
+			var val = $('textarea[id=chathistory]').val();
+			$('textarea[id=chathistory]').val(val + username + ' ['+data.date+'] ：'+ data.msg + '\n');
 		});
 	
 		socket.on('enter chat',function(data){
@@ -113,9 +119,9 @@
 			socket.emit('new message',{fromUser:username,tousers:tousers,msg:msg});		
 		}
 		
-		$('textarea[id=message]').val('');
-		var val = $('textarea[id=chathistory]').val();
-		$('textarea[id=chathistory]').val(val + username + ' ：' + msg + '\n');
+		// $('textarea[id=message]').val('');
+		// 		var val = $('textarea[id=chathistory]').val();
+		// 		$('textarea[id=chathistory]').val(val + username + ' ['+new Date()+'] ：'+ msg + '\n');
 	}
 	
 	function refreshOnlineUsers(data){

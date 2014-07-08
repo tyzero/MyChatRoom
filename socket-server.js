@@ -10,15 +10,75 @@ var users = {
 		socket:null,
 		online:false
 	},
+	xingtianyu:{
+		socket:null,
+		online:false
+	},
+	zhangjiankun:{
+		socket:null,
+		online:false
+	},
+	mayingjiao:{
+		socket:null,
+		online:false
+	},
+	wangrongguo:{
+		socket:null,
+		online:false
+	},
+	qiaofuli:{
+		socket:null,
+		online:false
+	},
+	haoyongqiang:{
+		socket:null,
+		online:false
+	},
 	lizilin:{
 		socket:null,
 		online:false
 	},
-	xiaofang:{
+	pengxiaofang:{
 		socket:null,
 		online:false
 	},
-	kehan:{
+	liukehan:{
+		socket:null,
+		online:false
+	},
+	huleping:{
+		socket:null,
+		online:false
+	},
+	liuguanglei:{
+		socket:null,
+		online:false
+	},
+	luhongjuan:{
+		socket:null,
+		online:false
+	},
+	wangfang:{
+		socket:null,
+		online:false
+	},
+	zhangwei:{
+		socket:null,
+		online:false
+	},
+	renyin:{
+		socket:null,
+		online:false
+	},
+	tianhongfang:{
+		socket:null,
+		online:false
+	},
+	lihan:{
+		socket:null,
+		online:false
+	},
+	gaolei:{
 		socket:null,
 		online:false
 	}
@@ -38,13 +98,16 @@ function getOnlineUsers(){
 io.on('connection', function(socket){
 	socket.on('new message',function(data){
 		var i,user;
+		
+		socket.emit('update myself',{fromUser:data.fromUser,msg:data.msg,date:new Date()});
+		
 		if(data.broadcast===true){
-			socket.broadcast.emit('new message',{fromUser:data.fromUser,msg:data.msg});
+			socket.broadcast.emit('new message',{fromUser:data.fromUser,msg:data.msg,date:new Date()});
 		}else{
 			for(i=0;i<data.tousers.length;i++){
 				user = users[data.tousers[i]];
 				if(user.online==true && user.socket!=null){
-					user.socket.emit('new message',{fromUser:data.fromUser,msg:data.msg});
+					user.socket.emit('new message',{fromUser:data.fromUser,msg:data.msg,date:new Date()});
 				}
 			}
 		}
